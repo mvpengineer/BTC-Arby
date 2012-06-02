@@ -20,13 +20,6 @@ if realtime:
 else:
     api = Historical()
     #print api.get_data_from_exchange(datetime.datetime.now())
-    trade_options = dict(
-            currency_pair = 'USD',
-            buy_BTC = True,
-            price = 13.00,
-            volume = 300.00,
-            time_expiry = datetime.datetime.now()
-    )
     #api.execute_trade([Trade(**trade_options)])
 
     s = SingleExchangeStrategy()
