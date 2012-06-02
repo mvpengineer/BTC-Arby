@@ -13,3 +13,17 @@ class CurrencyPairState(object):
 
     def __repr__(self):
        return str(dict(self.__dict__))
+       
+   #MT
+   #is this the standard practice for getters?    
+    def get_currency_pair(self):
+        return self.currency_pair
+       
+    def get_bid(self):
+        return self.bid
+       
+    def get_ask(self):
+        return self.ask
+       
+    def get_time(self):
+        return self.time
