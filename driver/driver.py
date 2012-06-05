@@ -7,12 +7,16 @@ from exchange_api.historical import Historical
 from helpers.trade import Trade
 from strategy.singleexchangestrategy import SingleExchangeStrategy
 
+# settings
 realtime = False
 strategy = 'strategy_name'
 
+# run the program
 if realtime:
+    # TODO : create realtime run environment
     pass
 else:
+    # run the driver over historical data
     api = Historical()
     print api.get_data_from_exchange(datetime.datetime.now())
     trade_options = dict(
