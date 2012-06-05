@@ -11,8 +11,8 @@ from strategy.singleexchangestrategy import SingleExchangeStrategy
 realtime = False
 strategy = 'strategy_name'
 
-portfolio_USD = 500.00
-portfolio_EUR = 500.00
+portfolio_USD = 100.00    #how many BTC of USD I have
+portfolio_EUR = 100.00
 portfolio_BTC = 100.00
 
 if realtime:
