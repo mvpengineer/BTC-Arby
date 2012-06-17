@@ -145,4 +145,3 @@ class SingleExchangeStrategy(Strategy):
         """
         return 0.00
         
-        
