@@ -19,7 +19,7 @@ def get_nonce():
 def sign_data(secret, data):
     return base64.b64encode(str(HMAC(secret, data, sha512).digest()))
       
-class RealTime(ExchangeAPI):
+class MtGoxRealTime(ExchangeAPI):
     def __init__(self, auth_key, auth_secret):
         self.auth_key = auth_key
         self.auth_secret = base64.b64decode(auth_secret)
@@ -64,44 +64,42 @@ class RealTime(ExchangeAPI):
         bid_array = []
         ask_array = []
         for i in range(asks_length):
-            ask_array.append((asks[i]['price'],asks[i]['amount']))
+            ask_array.append((asks[i]['price'],asks[i]['amount'],asks[i]['stamp']))
             
         for i in range(bids_length):                        #reverse order for bids, and also extra one for 0-indexed
-            bid_array.append((bids[bids_length - i - 1]['price'],bids[bids_length - i - 1]['amount']))    
+            bid_array.append((bids[bids_length - i - 1]['price'],bids[bids_length - i - 1]['amount'],bids[bids_length - i -1]['stamp']))    
 
         ask_array = sorted(ask_array)
         bid_array = sorted(bid_array)[::-1]                   #reverse sorted order
 
         ask_array_shortened = ask_array[0:how_many_trades]
         bid_array_shortened = bid_array[0:how_many_trades]
-            
-        currency_options = dict(
-                currency_pair=currency,
-                bid=bid_array_shortened,
-                ask=ask_array_shortened,
-                time=datetime.datetime.now()
-        )
-        currency_pair_state = CurrencyPairState(**currency_options)
-        return currency_pair_state
+        
+        json['return']['asks'] = ask_array_shortened
+        json['return']['bids'] = bid_array_shortened
+        return json
         
     def get_data_from_exchange(self):
         
         args = {}
+        ret = {}
         currency = "BTCUSD"
         path = currency+"/fulldepth"
-        
-        ctp_USD = self.get_currency_trade_pair_from_JSON(self.perform(path,args),currency)
+        ctp = self.get_currency_trade_pair_from_JSON(self.perform(path,args),currency)
+        ret[currency] = ctp
         
         currency = "BTCEUR"
         path = currency+"/fulldepth"
-        ctp_EUR = self.get_currency_trade_pair_from_JSON(self.perform(path,args),currency)
+        ctp = self.get_currency_trade_pair_from_JSON(self.perform(path,args),currency)
+        ret[currency] = ctp
         currency = "BTCGBP"
         path = currency+"/fulldepth"
-        ctp_GBP = self.get_currency_trade_pair_from_JSON(self.perform(path,args),currency)
+        ctp = self.get_currency_trade_pair_from_JSON(self.perform(path,args),currency)
+        ret[currency] = ctp
         
-        return [ctp_USD,ctp_EUR,ctp_GBP]
+        ret['active'] = 2
+        time = datetime.datetime.now()
+        ret['queried_at'] = time
         
-        
-        
-        
+        return ret
         

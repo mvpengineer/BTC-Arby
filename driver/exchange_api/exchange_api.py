@@ -6,7 +6,7 @@ class ExchangeAPI(object):
     """
     Abstract base class for exchange APIs
     """
-    def get_data_from_exchange(self, now):
+    def get_data_from_exchange(self):
         """
         Retrieves data from the given exchange, and returns it as an array of CurrencyPairStates.
         """
@@ -18,7 +18,7 @@ class ExchangeAPI(object):
         """
         for trade in trades:
             # create a thread / process that executes the trade
-            pass
+            execute_trade(trade)
 
     def execute_trade(self, trade):
         """
