@@ -10,7 +10,7 @@ Interesting files:
 strategy/singleexchangestrategy.py
 ---
 For trading within Mt. Gox, looking at various currencies to find a gain, and making all trades simultaneously.
-
+ 
 genetic\ algo/genetic.py
 ---
 Find best trades to make given the history of Mt. Gox--trying to take into account slippage and delays in trades being made.
